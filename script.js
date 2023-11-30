@@ -41,7 +41,7 @@ window.addEventListener('load', function(){
                 this.alignCollisionSpriteX = 0;
                 this.alignCollisionSpriteY = 50;
 
-                this.collisionX = Math.floor(Math.random()*100);
+                this.collisionX = -1 * Math.floor(Math.random()*100);
                 this.collisionY = this.game.topMargin + this.height + Math.random() * (this.game.height - this.height - this.game.topMargin);
                 this.speedX = 2;
                 this.collisionRadius = 20;
@@ -247,6 +247,7 @@ window.addEventListener('load', function(){
             this.collisionObjects = this.game.collisionObjects;
 
             //stats
+
             this.level = 1;
             this.maxHealth = 230 + this.level * 20;
             this.health = this.maxHealth;
@@ -255,7 +256,7 @@ window.addEventListener('load', function(){
             this.attackInterval = this.maxFrameAttack * this.frameToAnimate;
             this.score = 0;
             this.regen = 0;
-            this.expCeil = 100 + this.level * 25;
+            this.expCeil = 50 + this.level * 25;
             this.exp = 0;
 
         }
@@ -275,6 +276,7 @@ window.addEventListener('load', function(){
                 // context.stroke();
         }
         update(){
+            if(this.exp >= this.expCeil) this.levelUp();
             this.collisionObjects = this.game.collisionObjects;
             // update frame
             this.frame = this.frame < this.maxFrame * this.frameToAnimate ? this.frame + 1 : this.minFrame;
@@ -352,13 +354,6 @@ window.addEventListener('load', function(){
         takeDamage(attackValue, attacker){
             super.takeDamage(attackValue, attacker);
         }
-        levelUp(){
-            if(this.exp >= this.expCeil){
-                this.level = this.level+1;
-                
-            }
-            
-        }
         gobble(){
             this.collisionObjects.forEach(object =>{
                 if(this.type != object.type && object.health > 0){
@@ -382,6 +377,14 @@ window.addEventListener('load', function(){
             }else{
                 this.health += regen;
             }
+        }
+        levelUp(){
+            this.level = this.level + 1;
+            this.maxHealth = 230 + this.level * 20;
+            this.health = this.maxHealth;
+            this.attack = 25 + this.level * 5;
+            this.expCeil = 50 + this.level * 25;
+            this.exp = 0;
         }
         setAnimation(newImage){
             super.setAnimation(newImage);
@@ -584,13 +587,13 @@ window.addEventListener('load', function(){
             this.width = canvas.width;
             this.height = canvas.height;
             this.topMargin = 100;
-            this.enemyInterval = 200;
+            this.enemyInterval = 100;
             this.enemyTimer = 0;
             this.maxJellyFish = 5;
             this.maxAnglerFish = 5;
             this.maxEel = 5;
             this.maxSwordFish = 2;
-            this.maxOctopus = 2;
+            this.maxOctopus = 1;
             this.jellyfish = [];
             this.anglerfish = [];
             this.eels = [];
@@ -662,11 +665,11 @@ window.addEventListener('load', function(){
             context.font = '20px Helvetica'; 
             context.fillText('XP', 170, 37);
             context.fillRect(205, 30-(20*0.5), this.player.exp, 20);
-            context.fillText(this.player.exp, 480, 37);
+            context.fillText(this.player.exp, 205 + this.player.expCeil + 20, 37);
             context.fillStyle = 'rgba(255,255,0,1.00)';
             context.fillText('HP', 170, 77);
             context.fillRect(205, 70-(20*0.5), this.player.health, 20);
-            context.fillText(this.player.health, 480, 77);
+            context.fillText(this.player.health, 205 + this.player.maxHealth + 20, 77);
             context.restore();
 
             //tutorial
@@ -744,7 +747,7 @@ window.addEventListener('load', function(){
                     if(this.octopi.length < this.maxOctopus) this.octopi.push(new Octopus(this, this.width, this.height))
                     break;
                 case 3:
-                    if(this.swordfish.length < this.maxSwordFish) this.swordfish.push(new SwordFish(this, this.width, this.height))
+                    if(this.swordfish.length < this.maxSwordFish && this.player.level > 2) this.swordfish.push(new SwordFish(this, this.width, this.height))
                     break;
                 case 2:
                     if(this.eels.length < this.maxEel) this.eels.push(new Eel(this, this.width, this.height))
