@@ -1,0 +1,18 @@
+* {
+    padding: 0;
+    margin: 0 0 0 0;
+    box-sizing: border-box;
+}
+
+#jellyfish-attack, #jellyfish-death, #jellyfish-idle, #jellyfish-hurt, #jellyfish-walk, #turtle-attack, #turtle-death, #turtle-idle, #turtle-hurt, #turtle-walk, #octopus-attack, #octopus-death, #octopus-idle, #octopus-hurt, #octopus-walk, #swordfish-attack, #swordfish-death, #swordfish-idle, #swordfish-hurt, #swordfish-walk, #eel-attack, #eel-death, #eel-idle, #eel-hurt, #eel-walk, #anglerfish-attack, #anglerfish-death, #anglerfish-idle, #anglerfish-hurt, #anglerfish-walk, #turtle-attack-reversed, #turtle-walk-reversed {
+    display: none;
+}
+
+
+#game-area {
+    background-image: linear-gradient(aqua, 20%,royalblue, 70%, darkblue);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
