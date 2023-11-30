@@ -255,6 +255,7 @@ window.addEventListener('load', function(){
             this.attackInterval = this.maxFrameAttack * this.frameToAnimate;
             this.score = 0;
             this.regen = 0;
+            this.expCeil = 100 + this.level * 25;
             this.exp = 0;
 
         }
@@ -350,6 +351,13 @@ window.addEventListener('load', function(){
         }
         takeDamage(attackValue, attacker){
             super.takeDamage(attackValue, attacker);
+        }
+        levelUp(){
+            if(this.exp >= this.expCeil){
+                this.level = this.level+1;
+                
+            }
+            
         }
         gobble(){
             this.collisionObjects.forEach(object =>{
