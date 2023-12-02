@@ -86,7 +86,6 @@ window.addEventListener('load', function(){
                     this.deadTimer = this.deadTimer + 1;
                     if(this.deadTimer >= this.deadInterval){
                         this.game.removeGameObject();
-                        this.collisionObjects = this.game.collisionObjects;
                         
                     }
                 }else{
@@ -102,6 +101,7 @@ window.addEventListener('load', function(){
                     this.isSwimming = 1;
                     this.isAttacking = 0;
 
+                    this.collisionObjects = this.game.collisionObjects;
                     this.collisionObjects.forEach(object =>{
                         if(this.type != object.type && object.health > 0){
                             const collision = this.game.checkCollision(this, object);
@@ -145,7 +145,7 @@ window.addEventListener('load', function(){
             takeDamage(attackValue, attacker){
                 this.health = this.health - attackValue;
                 if (this.health < 0) this.health = 0;
-                if (this.health == 0 && attacker == "player") {
+                if (this.health == 0 && attacker == "player" && this.game.gameOver == false) {
                     this.game.player.takeLoot(this.score, this.exp, this.regen);
                 }
             }
@@ -355,6 +355,7 @@ window.addEventListener('load', function(){
             super.takeDamage(attackValue, attacker);
         }
         gobble(){
+            this.collisionObjects = this.game.collisionObjects;
             this.collisionObjects.forEach(object =>{
                 if(this.type != object.type && object.health > 0){
                     const collision = this.game.checkCollision(this, object);
