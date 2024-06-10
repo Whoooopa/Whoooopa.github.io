@@ -1,14 +1,40 @@
 window.addEventListener('load', function(){
     const canvas = document.getElementById('game-area');
     const ctx = canvas.getContext('2d');
-    canvas.width = 1200;
-    canvas.height = 600;
 
     ctx.fillStyle = 'white';
     ctx.lineWidth = 3;
     ctx.strokeStyle = 'white';
     ctx.font = '30px Helvetica';  
 
+    function resizeCanvas() {
+        const container = document.getElementById('game-area');
+        const aspectRatio = 2; // 1200 / 600
+
+        // Calculate the new width and height based on the aspect ratio
+        let newWidth = container.clientWidth;
+        let newHeight = container.clientHeight;
+
+        if (newWidth / newHeight > aspectRatio) {
+            newWidth = newHeight * aspectRatio;
+        } else {
+            newHeight = newWidth / aspectRatio;
+        }
+
+        canvas.width = newWidth;
+        canvas.height = newHeight;
+
+        // Redraw the game content
+        ctx.fillStyle = 'white';
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = 'white';
+        ctx.font = '30px Helvetica';
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+
+    resizeCanvas();
+    
     class Fish {
             constructor(game, canvasWidth, canvasHeight){
                 this.game = game;
