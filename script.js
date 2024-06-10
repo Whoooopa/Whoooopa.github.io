@@ -9,7 +9,7 @@ window.addEventListener('load', function(){
 
     function resizeCanvas() {
         const container = document.getElementById('game-area');
-        const aspectRatio = 2; // 1200 / 600
+        const aspectRatio = 1;
 
         // Calculate the new width and height based on the aspect ratio
         let newWidth = container.clientWidth;
